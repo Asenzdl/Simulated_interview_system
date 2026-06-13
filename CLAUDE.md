@@ -56,5 +56,4 @@ cd backend && uv run pytest
 - Commit 用 Conventional Commits 格式：`feat:`, `fix:`, `chore:`, `docs:`, `refactor:`
 - 前缀用英文，描述可中英文混用
 - 每个功能点单独 commit，不做大杂烩
-- 用户主动要求时才 commit 和 push
-- 远端仓库：git@github.com:Asenzdl/Simulated_interview_system.git
+- 功能点完成后，询问用户是否确认 commit 和 push

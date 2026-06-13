@@ -17,7 +17,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, Trash2, ExternalLink } from "lucide-react"
+import { MoreHorizontal, Trash2, PanelRight } from "lucide-react"
 import type { Question } from "@/types"
 
 const difficultyLabels: Record<number, string> = {
@@ -80,9 +80,9 @@ export function QuestionTable({ questions, selectedIds, onToggleSelect, onToggle
                   <span className="truncate max-w-md">{q.title}</span>
                   <button
                     onClick={() => onEdit(q)}
-                    className="hidden group-hover:inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors shrink-0"
+                    className="hidden group-hover:inline-flex items-center gap-1 ml-3 text-xs text-muted-foreground hover:text-foreground transition-colors shrink-0 cursor-pointer"
                   >
-                    <ExternalLink className="size-3" />
+                    <PanelRight className="size-3" />
                     打开
                   </button>
                 </div>
