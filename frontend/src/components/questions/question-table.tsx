@@ -10,14 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, Trash2, PanelRight } from "lucide-react"
+import { PanelRight } from "lucide-react"
 import type { Question } from "@/types"
 
 const difficultyLabels: Record<number, string> = {
@@ -42,10 +35,9 @@ interface QuestionTableProps {
   onToggleSelect: (id: number) => void
   onToggleAll: () => void
   onEdit: (q: Question) => void
-  onDelete: (q: Question) => void
 }
 
-export function QuestionTable({ questions, selectedIds, onToggleSelect, onToggleAll, onEdit, onDelete }: QuestionTableProps) {
+export function QuestionTable({ questions, selectedIds, onToggleSelect, onToggleAll, onEdit }: QuestionTableProps) {
   const allSelected = questions.length > 0 && selectedIds.length === questions.length
 
   return (
@@ -59,13 +51,12 @@ export function QuestionTable({ questions, selectedIds, onToggleSelect, onToggle
           <TableHead>分类</TableHead>
           <TableHead>难度</TableHead>
           <TableHead>标签</TableHead>
-          <TableHead className="w-[50px]"></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {questions.length === 0 ? (
           <TableRow>
-            <TableCell colSpan={6} className="h-24 text-center text-muted-foreground">
+            <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
               暂无题目，点击上方按钮添加
             </TableCell>
           </TableRow>
@@ -114,21 +105,6 @@ export function QuestionTable({ questions, selectedIds, onToggleSelect, onToggle
                     <Badge variant="secondary" className="text-xs">+{q.tags.length - 3}</Badge>
                   )}
                 </div>
-              </TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon-sm">
-                      <MoreHorizontal className="size-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => onDelete(q)} className="text-destructive">
-                      <Trash2 className="mr-2 size-4" />
-                      删除
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
               </TableCell>
             </TableRow>
           ))

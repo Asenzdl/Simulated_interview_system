@@ -98,7 +98,7 @@ export default function QuestionsPage() {
           {selectedIds.length > 0 && (
             <Button variant="destructive" onClick={() => setBatchDeleteOpen(true)}>
               <Trash2 className="mr-2 size-4" />
-              批量删除 ({selectedIds.length})
+              删除 ({selectedIds.length})
             </Button>
           )}
           <Button variant="outline" onClick={() => setCategoryOpen(true)}>
@@ -135,7 +135,6 @@ export default function QuestionsPage() {
         onToggleSelect={handleToggleSelect}
         onToggleAll={handleToggleAll}
         onEdit={(q) => router.push(`/questions/${q.id}/edit`)}
-        onDelete={(q) => { setDeleteQuestion(q); setDeleteOpen(true) }}
       />
       {pages > 1 && (
         <div className="flex justify-center gap-2">
