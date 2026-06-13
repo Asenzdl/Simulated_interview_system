@@ -42,3 +42,11 @@ cd backend && uv run pytest
 - API 写完用 curl 验证，前端写完用浏览器验证
 - UI 要求现代优雅，CRUD 通过弹窗（Dialog）进行，不用内联表单
 - 配置从 `.env` 读取，不硬编码
+
+## Git 规范
+
+- Commit 用 Conventional Commits 格式：`feat:`, `fix:`, `chore:`, `docs:`, `refactor:`
+- 前缀用英文，描述可中英文混用
+- 每个功能点单独 commit，不做大杂烩
+- 用户主动要求时才 commit 和 push
+- 远端仓库：git@github.com:Asenzdl/Simulated_interview_system.git
