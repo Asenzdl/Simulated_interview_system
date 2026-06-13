@@ -43,6 +43,14 @@ cd backend && uv run pytest
 - UI 要求现代优雅，CRUD 通过弹窗（Dialog）进行，不用内联表单
 - 配置从 `.env` 读取，不硬编码
 
+## ECC 工具使用
+
+- 后端 service 层开发：`ecc:tdd-workflow`
+- 后端 API 写完：`ecc:fastapi-review`
+- 前端组件写完：`ecc:react-review`
+- 每个 Phase 完成：`ecc:code-review`
+- 构建/启动报错：`ecc:build-fix`
+
 ## Git 规范
 
 - Commit 用 Conventional Commits 格式：`feat:`, `fix:`, `chore:`, `docs:`, `refactor:`
