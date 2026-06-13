@@ -10,7 +10,7 @@ class Question(Base):
     __tablename__ = "questions"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    title: Mapped[str] = mapped_column(Text, nullable=False)
+    title: Mapped[str] = mapped_column(Text, nullable=False, unique=True)
     content: Mapped[str | None] = mapped_column(Text)
     answer: Mapped[str | None] = mapped_column(Text)
     category_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("categories.id"), index=True)
