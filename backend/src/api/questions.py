@@ -72,7 +72,7 @@ async def import_questions_api(
     difficulty: int = Query(1, ge=1, le=5),
     db: AsyncSession = Depends(get_db),
 ):
-    if len(file_content) > 1_000_000:
-        raise HTTPException(status_code=413, detail="导入内容过大（最大 1MB）")
+    if len(file_content) > 50_000_000:
+        raise HTTPException(status_code=413, detail="导入内容过大（最大 50MB）")
     result = await import_questions(db, file_content, category_id=category_id, difficulty=difficulty)
     return result
