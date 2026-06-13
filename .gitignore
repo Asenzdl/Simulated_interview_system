@@ -38,3 +38,4 @@ Thumbs.db
 .ruff_cache/
 
 .history/
+.claude/
