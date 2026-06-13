@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from sqlalchemy import event
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
@@ -17,7 +17,7 @@ class Base(DeclarativeBase):
 @event.listens_for(Base, "before_update", propagate=True)
 def receive_before_update(mapper, connection, target):
     if hasattr(target, "updated_at"):
-        target.updated_at = datetime.utcnow()
+        target.updated_at = datetime.now(timezone.utc)
 
 
 async def get_db():

@@ -69,8 +69,10 @@ async def delete_question_api(question_id: int, db: AsyncSession = Depends(get_d
 async def import_questions_api(
     file_content: str = Body(..., media_type="text/plain"),
     category_id: int | None = None,
-    difficulty: int = 1,
+    difficulty: int = Query(1, ge=1, le=5),
     db: AsyncSession = Depends(get_db),
 ):
+    if len(file_content) > 1_000_000:
+        raise HTTPException(status_code=413, detail="导入内容过大（最大 1MB）")
     result = await import_questions(db, file_content, category_id=category_id, difficulty=difficulty)
     return result

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from sqlalchemy import select, func
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.models import Category
@@ -14,7 +15,11 @@ def _to_out(c: Category) -> CategoryOut:
 async def create_category(db: AsyncSession, data: CategoryCreate) -> CategoryOut:
     cat = Category(**data.model_dump())
     db.add(cat)
-    await db.commit()
+    try:
+        await db.commit()
+    except IntegrityError:
+        await db.rollback()
+        raise ValueError("该分类名已存在")
     await db.refresh(cat)
     return _to_out(cat)
 

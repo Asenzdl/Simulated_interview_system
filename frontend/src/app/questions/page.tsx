@@ -63,12 +63,16 @@ export default function QuestionsPage() {
 
   async function handleDelete() {
     if (!deleteQuestion) return
-    await questionsApi.delete(deleteQuestion.id)
-    toast.success("题目已删除")
-    setDeleteOpen(false)
-    setDeleteQuestion(null)
-    setSelectedIds([])
-    fetchData(page, search)
+    try {
+      await questionsApi.delete(deleteQuestion.id)
+      toast.success("题目已删除")
+      setDeleteOpen(false)
+      setDeleteQuestion(null)
+      setSelectedIds([])
+      fetchData(page, search)
+    } catch {
+      toast.error("删除失败")
+    }
   }
 
   function handleToggleSelect(id: number) {
@@ -80,11 +84,15 @@ export default function QuestionsPage() {
   }
 
   async function handleBatchDelete() {
-    await Promise.all(selectedIds.map((id) => questionsApi.delete(id)))
-    toast.success(`已删除 ${selectedIds.length} 道题目`)
-    setSelectedIds([])
-    setBatchDeleteOpen(false)
-    fetchData(page, search)
+    try {
+      await Promise.all(selectedIds.map((id) => questionsApi.delete(id)))
+      toast.success(`已删除 ${selectedIds.length} 道题目`)
+      setSelectedIds([])
+      setBatchDeleteOpen(false)
+      fetchData(page, search)
+    } catch {
+      toast.error("批量删除失败")
+    }
   }
 
   return (

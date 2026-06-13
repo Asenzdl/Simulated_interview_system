@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useCallback } from "react"
+import { useState, useRef, useCallback, useEffect } from "react"
 import {
   Dialog,
   DialogContent,
@@ -39,9 +39,9 @@ export function ImportDialog({ open, onOpenChange, onSuccess }: ImportDialogProp
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   // 加载分类列表
-  useState(() => {
-    categoriesApi.list().then((r) => setCategories(r.items)).catch(() => {})
-  })
+  useEffect(() => {
+    categoriesApi.list().then((r) => setCategories(r.items)).catch(() => toast.error("加载分类失败"))
+  }, [])
 
   const parsePreview = useCallback((text: string) => {
     const blocks = text.split(/\n---\n/).filter((b) => b.trim())

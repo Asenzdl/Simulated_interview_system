@@ -21,7 +21,10 @@ async def list_categories_api(db: AsyncSession = Depends(get_db)):
 
 @router.post("/", response_model=CategoryOut, status_code=201)
 async def create_category_api(data: CategoryCreate, db: AsyncSession = Depends(get_db)):
-    return await create_category(db, data)
+    try:
+        return await create_category(db, data)
+    except ValueError as e:
+        raise HTTPException(status_code=409, detail=str(e))
 
 
 @router.put("/{category_id}", response_model=CategoryOut)

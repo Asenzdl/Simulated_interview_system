@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import TypeVar, Generic
+from typing import Literal, TypeVar, Generic
 
 from pydantic import BaseModel, Field
 
@@ -21,13 +21,15 @@ class TagOut(TagBase):
     model_config = {"from_attributes": True}
 
 
+QuestionType = Literal["theory", "coding", "scenario", "behavioral"]
+
 class QuestionBase(BaseModel):
-    title: str
-    content: str | None = None
-    answer: str | None = None
+    title: str = Field(..., max_length=500)
+    content: str | None = Field(default=None, max_length=50000)
+    answer: str | None = Field(default=None, max_length=50000)
     category_id: int | None = None
     difficulty: int = Field(default=1, ge=1, le=5)
-    question_type: str = "theory"
+    question_type: QuestionType = "theory"
     is_active: bool = True
 
 
@@ -36,12 +38,12 @@ class QuestionCreate(QuestionBase):
 
 
 class QuestionUpdate(BaseModel):
-    title: str | None = None
-    content: str | None = None
-    answer: str | None = None
+    title: str | None = Field(default=None, max_length=500)
+    content: str | None = Field(default=None, max_length=50000)
+    answer: str | None = Field(default=None, max_length=50000)
     category_id: int | None = None
     difficulty: int | None = Field(default=None, ge=1, le=5)
-    question_type: str | None = None
+    question_type: QuestionType | None = None
     is_active: bool | None = None
     tags: list[str] | None = None
 
