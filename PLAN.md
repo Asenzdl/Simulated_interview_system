@@ -106,22 +106,21 @@
 
 ## Phase 3: 闪卡复习
 
-### 3.1 后端 FSRS 核心
-- [ ] core/fsrs.py — Card ↔ DB 转换
-- [ ] review_service.py — TDD: 先写 pytest
-- [ ] api/review.py — due/next/rate/stats
-- [ ] 验证: curl 测试 FSRS 计算正确
+### 3.1 后端 FSRS 核心 ✅
+- [x] review_service.py — TDD: 17 tests (get_due, next, rate, stats)
+- [x] api/review.py — due/next/rate/stats/queue-count
+- [x] 验证: 59 tests all pass
 
-### 3.2 前端闪卡组件
-- [ ] FlashCard — Framer Motion 3D 翻转
-- [ ] RatingButtons — Again/Hard/Good/Easy
-- [ ] ReviewProgress — 进度条
-- [ ] 验证: 翻转动效流畅
+### 3.2 前端闪卡组件 ✅
+- [x] FlashCard — Framer Motion 3D 翻转
+- [x] RatingButtons — Again/Hard/Good/Easy
+- [x] ReviewProgress — 进度条
+- [x] 验证: tsc --noEmit 通过
 
-### 3.3 前端复习页面
-- [ ] app/review/page.tsx — 复习流程
-- [ ] ReviewComplete — 完成统计弹窗
-- [ ] 验证: 完整复习流程可用
+### 3.3 前端复习页面 ✅
+- [x] app/review/page.tsx — 复习流程
+- [x] ReviewComplete — 完成统计弹窗
+- [x] 验证: tsc --noEmit 通过
 
 ## Phase 4: AI 模拟面试
 

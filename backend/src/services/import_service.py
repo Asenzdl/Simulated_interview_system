@@ -45,8 +45,8 @@ def parse_markdown(text: str) -> list[dict]:
             content = remaining[: answer_marker.start()].strip()
             answer = remaining[answer_marker.end() :].strip()
         else:
-            content = remaining
-            answer = ""
+            content = ""
+            answer = remaining
 
         questions.append({
             "title": title,

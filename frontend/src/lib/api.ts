@@ -32,6 +32,8 @@ import type {
   Category,
   CategoryCreate,
   CategoryUpdate,
+  CardState,
+  ReviewStats,
 } from "@/types"
 
 export const questions = {
@@ -75,4 +77,18 @@ export const categories = {
     request<Category>(`/api/categories/${id}`, { method: "PUT", body: JSON.stringify(data) }),
   delete: (id: number) =>
     request<void>(`/api/categories/${id}`, { method: "DELETE" }),
+}
+
+// ── Review ─────────────────────────────────────────
+
+export const review = {
+  due: () => request<CardState[]>("/api/review/due"),
+  next: () => request<CardState | null>("/api/review/next"),
+  rate: (questionId: number, rating: number) =>
+    request<CardState>(`/api/review/${questionId}/rate`, {
+      method: "POST",
+      body: JSON.stringify({ rating }),
+    }),
+  stats: () => request<ReviewStats>("/api/review/stats"),
+  queueCount: () => request<{ count: number }>("/api/review/queue-count"),
 }

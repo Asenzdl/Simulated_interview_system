@@ -1,28 +1,38 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from ..database import get_db
+from ..schemas.review import RateRequest, CardStateOut, ReviewStatsOut
+from ..services.review_service import get_due_cards, get_next_card, rate_card, get_review_stats
 
 router = APIRouter(prefix="/api/review", tags=["review"])
 
 
-@router.get("/due")
-async def get_due_cards():
-    return {"items": [], "total": 0}
+@router.get("/due", response_model=list[CardStateOut])
+async def get_due(db: AsyncSession = Depends(get_db)):
+    return await get_due_cards(db)
 
 
-@router.get("/next")
-async def get_next_card():
-    return {"message": "TODO"}
+@router.get("/next", response_model=CardStateOut | None)
+async def next_card(db: AsyncSession = Depends(get_db)):
+    card = await get_next_card(db)
+    return card
 
 
-@router.post("/{question_id}/rate")
-async def rate_card(question_id: int):
-    return {"message": "TODO"}
+@router.post("/{question_id}/rate", response_model=CardStateOut)
+async def rate(question_id: int, body: RateRequest, db: AsyncSession = Depends(get_db)):
+    try:
+        return await rate_card(db, question_id, body.rating)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
-@router.get("/stats")
-async def review_stats():
-    return {"total_reviewed": 0, "due_count": 0}
+@router.get("/stats", response_model=ReviewStatsOut)
+async def stats(db: AsyncSession = Depends(get_db)):
+    return await get_review_stats(db)
 
 
 @router.get("/queue-count")
-async def queue_count():
-    return {"count": 0}
+async def queue_count(db: AsyncSession = Depends(get_db)):
+    items = await get_due_cards(db)
+    return {"count": len(items)}
