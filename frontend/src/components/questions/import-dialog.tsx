@@ -46,10 +46,22 @@ export function ImportDialog({ open, onOpenChange, onSuccess }: ImportDialogProp
   const parsePreview = useCallback((text: string) => {
     const blocks = text.split(/\n---\n/).filter((b) => b.trim())
     const titles = blocks.map((b) => {
-      const firstLine = b.trim().split("\n")[0]
-      return firstLine.replace(/^##\s*/, "").trim()
+      let title = b.trim().split("\n")[0].trim()
+      // 去掉 # / ## 前缀
+      title = title.replace(/^#{1,2}\s*/, "")
+      // 去掉编号：找 . 或 、，在合理范围内截断
+      for (const ch of [".", "、"]) {
+        const i = title.indexOf(ch)
+        if (i > 0 && i <= 10) {
+          title = title.slice(i + 1).trim()
+          break
+        }
+      }
+      // 去掉标签 #tag
+      title = title.replace(/\s*#\w+/g, "").trim()
+      return title
     })
-    setPreview(titles)
+    setPreview(titles.filter(Boolean))
   }, [])
 
   function handleFile(f: File) {

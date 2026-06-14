@@ -40,13 +40,13 @@ export function FlashCard({ title, content, answer, className }: FlashCardProps)
         onClick={() => setFlipped((f) => !f)}
       >
         {!flipped ? (
-          <Card className="h-[500px] border-2 border-neutral-700 bg-[#303030] hover:border-neutral-500 transition-colors">
+          <Card className="h-[550px] border-2 border-neutral-700 bg-[#303030] hover:border-neutral-500 transition-colors">
             <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center">
               <h2 className="text-xl font-semibold leading-relaxed text-white">{title}</h2>
             </CardContent>
           </Card>
         ) : (
-          <Card className="h-[500px] border-2 border-neutral-200 bg-white flex flex-col">
+          <Card className="h-[550px] border-2 border-neutral-200 bg-white flex flex-col">
             <CardContent className="flex-1 flex flex-col items-center p-8 overflow-hidden">
               <div className="prose prose-sm max-w-none text-left overflow-y-auto flex-1 w-full scrollbar-hide">
                 <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>

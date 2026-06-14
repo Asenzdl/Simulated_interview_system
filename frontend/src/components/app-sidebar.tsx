@@ -5,10 +5,7 @@ import { usePathname } from "next/navigation"
 import {
   BookOpen,
   LayoutDashboard,
-  MessageSquare,
   RotateCcw,
-  AlertCircle,
-  BarChart3,
 } from "lucide-react"
 import {
   Sidebar,
@@ -28,9 +25,6 @@ const navItems = [
   { title: "仪表盘", href: "/", icon: LayoutDashboard },
   { title: "题库管理", href: "/questions", icon: BookOpen },
   { title: "闪卡复习", href: "/review", icon: RotateCcw },
-  { title: "模拟面试", href: "/interview", icon: MessageSquare },
-  { title: "错题本", href: "/errors", icon: AlertCircle },
-  { title: "数据分析", href: "/analytics", icon: BarChart3 },
 ]
 
 export function AppSidebar() {
