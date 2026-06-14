@@ -7,7 +7,6 @@ from datetime import datetime, timezone
 from fsrs import Scheduler, Card, Rating, State
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
 
 from src.models import Question, CardState, ReviewLog
 from src.schemas.review import CardStateOut, ReviewStatsOut
@@ -38,22 +37,6 @@ def _card_state_to_fsrs(cs: CardState, question_id: int) -> Card:
         "due": _ensure_utc(cs.due).isoformat(),
         "last_review": _ensure_utc(cs.last_review).isoformat() if cs.last_review else None,
     })
-
-
-def _fsrs_card_to_out(card: Card, question_id: int) -> CardStateOut:
-    """Convert an fsrs Card to a CardStateOut schema."""
-    return CardStateOut(
-        question_id=question_id,
-        due=card.due,
-        stability=card.stability or 0.0,
-        difficulty=card.difficulty or 0.0,
-        elapsed_days=0,
-        scheduled_days=0,
-        reps=0,
-        lapses=0,
-        state=card.state.value if isinstance(card.state, State) else card.state,
-        last_review=card.last_review,
-    )
 
 
 def _db_card_to_out(cs: CardState) -> CardStateOut:

@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -34,5 +36,16 @@ async def stats(db: AsyncSession = Depends(get_db)):
 
 @router.get("/queue-count")
 async def queue_count(db: AsyncSession = Depends(get_db)):
-    items = await get_due_cards(db)
-    return {"count": len(items)}
+    from sqlalchemy import select, func
+    from ..models import CardState, Question
+
+    now = datetime.now(timezone.utc)
+    due_cs = (await db.execute(
+        select(func.count()).select_from(CardState).where(CardState.due <= now)
+    )).scalar_one()
+    new_q = (await db.execute(
+        select(func.count()).select_from(Question)
+        .where(Question.is_active == True)  # noqa: E712
+        .where(~Question.id.in_(select(CardState.question_id)))
+    )).scalar_one()
+    return {"count": due_cs + new_q}
