@@ -32,44 +32,35 @@ export function FlashCard({ title, content, answer, className }: FlashCardProps)
   return (
     <>
       <div
-        className={cn("cursor-pointer [perspective:1200px]", className)}
+        className={cn("cursor-pointer", className)}
         onClick={() => setFlipped((f) => !f)}
       >
         <AnimatePresence mode="wait">
           {!flipped ? (
             <motion.div
               key="front"
-              initial={{ rotateY: -90, opacity: 0 }}
-              animate={{ rotateY: 0, opacity: 1 }}
-              exit={{ rotateY: 90, opacity: 0 }}
-              transition={{ duration: 0.35, ease: "easeInOut" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15, ease: "easeInOut" }}
             >
-              <Card className="min-h-[320px] border-2 hover:border-primary/40 transition-colors">
-                <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center gap-4">
-                  <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                    题目
-                  </span>
-                  <h2 className="text-xl font-semibold leading-relaxed">{title}</h2>
-                  <span className="text-xs text-muted-foreground mt-4 opacity-60">
-                    点击查看答案
-                  </span>
+              <Card className="h-[500px] border-2 border-neutral-700 bg-[#303030] hover:border-neutral-500 transition-colors">
+                <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center">
+                  <h2 className="text-xl font-semibold leading-relaxed text-white">{title}</h2>
                 </CardContent>
               </Card>
             </motion.div>
           ) : (
             <motion.div
               key="back"
-              initial={{ rotateY: -90, opacity: 0 }}
-              animate={{ rotateY: 0, opacity: 1 }}
-              exit={{ rotateY: 90, opacity: 0 }}
-              transition={{ duration: 0.35, ease: "easeInOut" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15, ease: "easeInOut" }}
             >
-              <Card className="min-h-[320px] border-2 border-primary/30 bg-primary/[0.03]">
-                <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center gap-4">
-                  <span className="text-xs font-medium text-primary uppercase tracking-wider">
-                    答案
-                  </span>
-                  <div className="prose prose-sm dark:prose-invert max-w-none text-left">
+              <Card className="h-[500px] border-2 border-neutral-200 bg-white flex flex-col">
+                <CardContent className="flex-1 flex flex-col items-center p-8 overflow-hidden">
+                  <div className="prose prose-sm max-w-none text-left overflow-y-auto flex-1 w-full">
                     <Markdown remarkPlugins={[remarkGfm]}>
                       {answer || "暂无答案"}
                     </Markdown>
@@ -78,7 +69,7 @@ export function FlashCard({ title, content, answer, className }: FlashCardProps)
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-muted-foreground"
+                      className="text-muted-foreground shrink-0 mt-3"
                       onClick={(e) => {
                         e.stopPropagation()
                         setSheetOpen(true)
@@ -88,9 +79,6 @@ export function FlashCard({ title, content, answer, className }: FlashCardProps)
                       查看详细内容
                     </Button>
                   )}
-                  <span className="text-xs text-muted-foreground mt-2 opacity-60">
-                    点击返回题目
-                  </span>
                 </CardContent>
               </Card>
             </motion.div>
