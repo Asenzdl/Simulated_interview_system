@@ -13,6 +13,7 @@ import {
 import { FileText } from "lucide-react"
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
+import rehypeHighlight from "rehype-highlight"
 import { cn } from "@/lib/utils"
 
 interface FlashCardProps {
@@ -48,7 +49,7 @@ export function FlashCard({ title, content, answer, className }: FlashCardProps)
           <Card className="h-[500px] border-2 border-neutral-200 bg-white flex flex-col">
             <CardContent className="flex-1 flex flex-col items-center p-8 overflow-hidden">
               <div className="prose prose-sm max-w-none text-left overflow-y-auto flex-1 w-full scrollbar-hide">
-                <Markdown remarkPlugins={[remarkGfm]}>
+                <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
                   {answer || "暂无答案"}
                 </Markdown>
               </div>
@@ -78,7 +79,7 @@ export function FlashCard({ title, content, answer, className }: FlashCardProps)
             <SheetDescription>{title}</SheetDescription>
           </SheetHeader>
           <div className="px-4 pb-4 overflow-y-auto flex-1 prose prose-sm dark:prose-invert max-w-none">
-            <Markdown remarkPlugins={[remarkGfm]}>
+            <Markdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
               {content || ""}
             </Markdown>
           </div>
