@@ -79,6 +79,15 @@ export const categories = {
     request<void>(`/api/categories/${id}`, { method: "DELETE" }),
 }
 
+// ── Analytics ──────────────────────────────────────
+
+export const analytics = {
+  overview: () =>
+    request<{ total_questions: number; due_count: number; mastered_count: number; today_reviewed: number }>(
+      "/api/analytics/overview"
+    ),
+}
+
 // ── Review ─────────────────────────────────────────
 
 export const review = {
