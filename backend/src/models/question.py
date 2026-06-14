@@ -23,6 +23,6 @@ class Question(Base):
 
     category = relationship("Category", back_populates="questions")
     tags = relationship("Tag", secondary=question_tags, back_populates="questions")
-    card_state = relationship("CardState", back_populates="question", uselist=False)
-    review_logs = relationship("ReviewLog", back_populates="question")
-    error_records = relationship("ErrorRecord", back_populates="question")
+    card_state = relationship("CardState", back_populates="question", uselist=False, cascade="all, delete-orphan")
+    review_logs = relationship("ReviewLog", back_populates="question", cascade="all, delete-orphan")
+    error_records = relationship("ErrorRecord", back_populates="question", cascade="all, delete-orphan")

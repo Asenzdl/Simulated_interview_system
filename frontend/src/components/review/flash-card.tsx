@@ -1,7 +1,6 @@
 "use client"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import {
@@ -29,61 +28,47 @@ export function FlashCard({ title, content, answer, className }: FlashCardProps)
 
   const showDetailButton = content && content !== answer
 
+  useEffect(() => {
+    setFlipped(false)
+  }, [title])
+
   return (
     <>
       <div
         className={cn("cursor-pointer", className)}
         onClick={() => setFlipped((f) => !f)}
       >
-        <AnimatePresence mode="wait">
-          {!flipped ? (
-            <motion.div
-              key="front"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15, ease: "easeInOut" }}
-            >
-              <Card className="h-[500px] border-2 border-neutral-700 bg-[#303030] hover:border-neutral-500 transition-colors">
-                <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center">
-                  <h2 className="text-xl font-semibold leading-relaxed text-white">{title}</h2>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="back"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15, ease: "easeInOut" }}
-            >
-              <Card className="h-[500px] border-2 border-neutral-200 bg-white flex flex-col">
-                <CardContent className="flex-1 flex flex-col items-center p-8 overflow-hidden">
-                  <div className="prose prose-sm max-w-none text-left overflow-y-auto flex-1 w-full">
-                    <Markdown remarkPlugins={[remarkGfm]}>
-                      {answer || "暂无答案"}
-                    </Markdown>
-                  </div>
-                  {showDetailButton && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-muted-foreground shrink-0 mt-3"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        setSheetOpen(true)
-                      }}
-                    >
-                      <FileText className="mr-1.5 size-3.5" />
-                      查看详细内容
-                    </Button>
-                  )}
-                </CardContent>
-              </Card>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {!flipped ? (
+          <Card className="h-[500px] border-2 border-neutral-700 bg-[#303030] hover:border-neutral-500 transition-colors">
+            <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center">
+              <h2 className="text-xl font-semibold leading-relaxed text-white">{title}</h2>
+            </CardContent>
+          </Card>
+        ) : (
+          <Card className="h-[500px] border-2 border-neutral-200 bg-white flex flex-col">
+            <CardContent className="flex-1 flex flex-col items-center p-8 overflow-hidden">
+              <div className="prose prose-sm max-w-none text-left overflow-y-auto flex-1 w-full scrollbar-hide">
+                <Markdown remarkPlugins={[remarkGfm]}>
+                  {answer || "暂无答案"}
+                </Markdown>
+              </div>
+              {showDetailButton && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-muted-foreground shrink-0 mt-3"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setSheetOpen(true)
+                  }}
+                >
+                  <FileText className="mr-1.5 size-3.5" />
+                  查看详细内容
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
