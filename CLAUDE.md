@@ -1,14 +1,14 @@
-# 智能模拟面试系统
+# 面试复习系统
 
-个人使用的面试复习工具：题库管理、闪卡复习（FSRS）、AI 模拟面试、错题追踪、数据分析。
+个人使用的面试复习工具：题库管理、闪卡复习（FSRS）、Dashboard 数据概览。
 
 ## 技术栈
 
-- 前端: Next.js 16 + Tailwind CSS 4 + shadcn/ui + Framer Motion + Recharts
+- 前端: Next.js 16 + Tailwind CSS 4 + shadcn/ui
 - 后端: FastAPI + SQLAlchemy 2.0 async + aiosqlite
-- 数据库: SQLite + ChromaDB（向量搜索）
-- AI: OpenAI SDK（兼容 DeepSeek 等第三方，通过 base_url 切换）
+- 数据库: SQLite
 - 闪卡: fsrs-python
+- Markdown: react-markdown + remark-gfm + rehype-highlight
 - 包管理: pnpm（前端）+ uv（后端）
 
 ## 启动命令
@@ -33,7 +33,7 @@ cd backend && uv run pytest
 - `ARCHITECTURE.md` — 技术细节参考（数据库表、API 规格、组件树）
 - `frontend/src/` — Next.js 前端源码
 - `backend/src/` — FastAPI 后端源码
-- `data/` — SQLite 数据库 + ChromaDB 存储
+- `data/` — SQLite 数据库
 
 ## 开发约定
 
